@@ -1,0 +1,46 @@
+_____________________________________________________________________________________________________________________________________________________________________________________________
+TASKS AHEAD
+    MVP
+1. Rewrite the remaining algorithms
+2. ALSO I HAVE AN ERROR WHERE THE WALLS CAN BE DRAWN ON TOP OF THE START AND END NODES. CAUSES A LOT OF PROBLEMS SOLVE IT ASAP!!!
+13. Post on github
+14. Add metrics and analysis section
+9. I need to figure out a way to move the start and end nodes while the search algo updates in real time. Probably will have to do something with the datastructure storing the visited nodes
+4. Add the speed and maybe even grid size adjuster 
+7. Maybe think of using multiple start nodes that map to the same finish node - EXTENSION
+10. Clean up code using chatGPT. But before that create a Github repo and do version control to show that I actually did all the coding before final clean up
+
+    UI TASKS
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+    CURRENT FOCUS
+2. Implement the clear functions
+    - Need to figure out clear Board
+1. Implement the remaining algorithms
+3. Get online code for maze generator & implement - pretty easy. Already implemented one.
+14. Add metrics and analysis section
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+    DONE
+6. Adjust code to make start and finish nodes to be movable
+2. Implement the clear functions.
+1. Section out the different parts of the page
+2. Implement Navbar
+5. Improve wall drawing AND final path animation and create tighter grid. Don't really hate the presentation I have rn tbh.
+12. Improve CSS Layout
+3. Figure out layout of footer and placing the elements in the right place
+12. Improve CSS Layout - I think I am happy with the current layout. Need to finish footer
+2. Debug wall issue - I think it's solved. Would've been ideal if I could just adjust it once I have placed the start node and handleMouseUp() has been called but because of my re-animation thing, it might cause issues. 
+11. Add Icons on top of start and finish nodes - Kinda handled by just keeping the start and finish nodes unchanged
+15. Add speed adjuster
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+    THOUGHTS
+The new Github repo I found is soooo helpful
+Showed me so many of my code inefficiencies
+Mainly cause I didn't really pre-plan how I was going to implement the methods I just followed Clement
+So I have a lot of inefficiencies and logic falacies
+    - One issue is with the way I am handling start and end nodes and coordinates in particular
+    - Contributes to how my clearBoard() is implemented... in turn affects maze generation
+    - Additionally, I just generally think Rohi has been using more efficient use of javascript methods and just state changes and all that. 
+    - A lot to learn and a lot to emulate
