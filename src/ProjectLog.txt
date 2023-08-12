@@ -11,10 +11,6 @@ TASKS AHEAD
 
 _____________________________________________________________________________________________________________________________________________________________________________________________
     CURRENT FOCUS
-2. Implement the clear functions
-    - Need to figure out clear Board
-1. Implement the remaining algorithms
-3. Get online code for maze generator & implement - pretty easy. Already implemented one.
 14. Add metrics and analysis section
 
 _____________________________________________________________________________________________________________________________________________________________________________________________
@@ -33,6 +29,8 @@ ________________________________________________________________________________
 2. ALSO I HAVE AN ERROR WHERE THE WALLS CAN BE DRAWN ON TOP OF THE START AND END NODES. CAUSES A LOT OF PROBLEMS SOLVE IT ASAP!!!
 13. Post on github
 4. Add the speed and maybe even grid size adjuster 
+1. Implement the remaining algorithms
+3. Get online code for maze generator & implement - pretty easy. Already implemented one.
 
 _____________________________________________________________________________________________________________________________________________________________________________________________
     THOUGHTS
