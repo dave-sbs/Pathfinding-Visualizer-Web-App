@@ -11,11 +11,15 @@ import Navbar from '../Navbar/Navbar.jsx';
 import './PathfindingVisualizer.css';
 
 //Pathfinder Algorithms
-import {dijkstra, getNodesInShortestPathOrder} from '../../algorithms/search/dijkstra';
+import { dijkstra, getNodesInShortestPathOrderDijkstra } from '../../algorithms/search/dijkstra';
+import { depthFirstSearch, getNodesInShortestPathOrderDFS } from '../../algorithms/search/depthFirstSearch';
+import { breadthFirstSearch, getNodesInShortestPathOrderBFS } from '../../algorithms/search/breadthFirstSearch';
+import { aStar, getNodesInShortestPathOrderAStar } from '../../algorithms/search/aStar';
 
 //Maze Algorithms
 import { horizontalMaze } from '../../algorithms/maze/horizontalMaze.js';
-
+import { verticalMaze } from '../../algorithms/maze/verticalMaze.js';
+import { recursiveDivisionMaze } from '../../algorithms/maze/recursiveDivisionMaze.js';
 
 let START_NODE_ROW = 10;
 let START_NODE_COL = 15;
@@ -63,9 +67,7 @@ export default class PathfindingVisualizer extends Component {
       this.setState ({isDragging: true, movingStartNode: true});
     } else if (row === FINISH_NODE_ROW || col === FINISH_NODE_COL) {
       this.setState ({isDragging: true, movingStartNode: false});
-      //Else draw wall
     } else {
-      // If node is the start node or finish node, do nothing
       if (row === START_NODE_ROW && col === START_NODE_COL) return;
       if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) return;
       const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
@@ -92,13 +94,10 @@ export default class PathfindingVisualizer extends Component {
   }
   
   handleMouseEnter(row, col) {
-    // Check if the animation is running, if so, return without handling the event
     if (this.state.isAlgoGenerating || this.state.isDragging || !this.state.mouseIsPressed) return;
-    // If node is the start node or finish node, do nothing
+    // Check if the mouse down event occurs on the start node or finish node
     if (row === START_NODE_ROW && col === START_NODE_COL) return;
     if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) return;
-
-    // Toggle the wall on the grid at the specified row and column
     const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
     this.setState({ grid: newGrid });
   }
@@ -107,22 +106,25 @@ export default class PathfindingVisualizer extends Component {
     this.setState({ isDragging: false, mouseIsPressed: false });
     // If start or finish nodes are moved after a visualization was performed, re-do visualization from new positions
     if (this.state.isVisualized) {
-      this.visualizeSelectedAlgorithm("Dijkstra's Algorithm") // will be changed to this.visualize(option)
+      this.visualizeSelectedAlgorithm(this.state.selectedAlgorithm) // will be changed to this.visualize(option)
     }
   }
 
   //Handles calling the appropriate algorithm to visualize
   visualizeSelectedAlgorithm(option) {
-    // const [algo, setAlgo] = useState("Algorithms");
     switch (option) {
     case "Dijkstra's Algorithm":
       this.visualizeDijkstra();
-    // case bfs:
-      // this.visualizeBFS();
-    // case "astar":
-      // this.visualizeAStar();
-    // case "dfs":
-      // this.visualizeDFS();
+      break;
+    case "Breadth First Search":
+      this.visualizeBFS();
+      break;
+    case "A Star Search":
+      this.visualizeAStar();
+      break;
+    case "Depth First Search":
+      this.visualizeDFS();
+      break;
     default: 
       return;
     }
@@ -136,12 +138,54 @@ export default class PathfindingVisualizer extends Component {
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const gridCopy = grid.slice();
-    const visitedNodesInOrder = dijkstra(gridCopy, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(startNode, finishNode);
+    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrderDijkstra(startNode, finishNode);
     this.setState({ isVisualized : true });
     this.animateSelectedAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
   }
+
+  //Handle visualizing DFS
+  visualizeDFS() {
+    if (this.state.isAlgoGenerating) return;
+    //Using the clear path just so that it could re-run if I reposition the start and end nodes
+    this.clearPath();
+    const { grid } = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode);
+    this.setState({ isVisualized : true });
+    this.animateSelectedAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
+  }
+
+    //Handle visualizing BFS
+    visualizeBFS() {
+      if (this.state.isAlgoGenerating) return;
+      //Using the clear path just so that it could re-run if I reposition the start and end nodes
+      this.clearPath();
+      const { grid } = this.state;
+      const startNode = grid[START_NODE_ROW][START_NODE_COL];
+      const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+      const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
+      const nodesInShortestPathOrder = getNodesInShortestPathOrderBFS(finishNode);
+      this.setState({ isVisualized : true });
+      this.animateSelectedAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
+    }
+
+
+    visualizeAStar() {
+      if (this.state.isAlgoGenerating) return;
+      //Using the clear path just so that it could re-run if I reposition the start and end nodes
+      this.clearPath();
+      const { grid } = this.state;
+      const startNode = grid[START_NODE_ROW][START_NODE_COL];
+      const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+      const visitedNodesInOrder = aStar(grid, startNode, finishNode);
+      const nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(finishNode);
+      this.setState({ isVisualized : true });
+      this.animateSelectedAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
+    }
+
 
   animateSelectedAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder) {
     this.setState({ isAlgoGenerating: true });
@@ -152,7 +196,6 @@ export default class PathfindingVisualizer extends Component {
         }, this.state.speed * i);
           return;
       }
-      
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
@@ -194,11 +237,42 @@ export default class PathfindingVisualizer extends Component {
     });
   }
 
+  generateVerticalMaze() {
+    if (this.state.isAlgoGenerating || this.state.isMazeGenerating) {
+      return;
+    }
+    this.setState({ isMazeGenerating: true });
+    setTimeout(() => {
+      const { grid } = this.state;
+      const startNode = grid[START_NODE_ROW][START_NODE_COL];
+      const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+      const walls = verticalMaze(grid, startNode, finishNode);
+      this.animateMaze(walls);
+    });
+  }
+
+  generateRecursiveDivisionMaze() {
+    if (this.state.isAlgoGenerating || this.state.isMazeGenerating) {
+      return;
+    }
+    this.setState({ isMazeGenerating: true });
+    setTimeout(() => {
+      const { grid } = this.state;
+      const startNode = grid[START_NODE_ROW][START_NODE_COL];
+      const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+      const walls = recursiveDivisionMaze(grid, startNode, finishNode);
+      this.animateMaze(walls);
+    });
+  }
+
   animateMaze(walls) {
+    this.clearWalls();
+    this.clearPath();
     for (let i = 0; i <= walls.length; i++) {
       if (i === walls.length) {
         setTimeout(() => {
-          this.clearBoard();
+          this.clearWalls();
+          this.clearPath();
           let newGrid = getNewGridWithMaze(this.state.grid, walls);
           this.setState({ grid: newGrid, isMazeGenerating: false });
         }, i * this.state.mazeSpeed); //Adjust delay here.
@@ -212,8 +286,6 @@ export default class PathfindingVisualizer extends Component {
       }, i * this.state.mazeSpeed);
     }
   };
-
-
 
   clearPath() {
     // Check if the animation is running, if so, return without handling the event
@@ -273,131 +345,6 @@ export default class PathfindingVisualizer extends Component {
       this.restorePivotnodes(true, true);
       this.setState({ isVisualized: false, grid });
   }
-  //Still doesn't fully work, need to figure out how to make it so that the start and end nodes are not affected by the clear board function
-  //Doesn't properly clear the walls either
-  // clearBoard(){
-  //   if (this.state.isAlgoGenerating || this.state.isMazeGenerating) return;
-  //   for (let row = 0; row < this.state.grid.length; row++) {
-  //     for (let col = 0; col < this.state.grid[0].length; col++) {
-  //       // if (
-  //       //   // !(
-  //       //   //   (row === START_NODE_ROW && col === START_NODE_COL) ||
-  //       //   //   (row === FINISH_NODE_ROW && col === FINISH_NODE_COL)
-  //       //   //   )
-  //       //     ){
-  //             document.getElementById(`node-${row}-${col}`).className = "node";
-  //           // }
-  //         }
-  //       }
-
-  //    // Reset the start and finish node positions
-  //    START_NODE_ROW = 10;
-  //    START_NODE_COL = 15;
-  //    FINISH_NODE_ROW = 10;
-  //    FINISH_NODE_COL = 35;
-
-  //   const newGrid = getInitialGrid();
-
-  //   // Clear the visualization flag
-  //   this.setState({ isVisualized : false });
-  //   this.setState({ isAlgoGenerating: false });
-  //   this.setState({ isMazeGenerating: false });
-  //   this.setState({ newGrid });
-  // }
-
-  // clearBoard() {
-  //   // Check if the animation is running, if so, return without handling the event
-  //   if (this.state.isAlgoGenerating || this.state.isMazeGenerating) return;
-  
-  //   const { grid } = this.state;
-  //   for (let row = 0; row < grid.length; row++) {
-  //     for (let col = 0; col < grid[0].length; col++) {
-  //       const node = grid[row][col];
-  //       if (node.isStart) {
-  //         // document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
-  //         grid[row][col].isStart = false;
-  //       }
-  //       if (node.isFinish) {
-  //         // document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
-  //         grid[row][col].isFinish = false;
-  //       }
-  //       if (node.isWall) {
-  //         // document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
-  //         grid[row][col].isWall = false;
-  //       }
-  //       node.isVisited = false;
-  //       const nodeElement = document.getElementById(`node-${node.row}-${node.col}`);
-  //       nodeElement.className = 'node';
-  //       nodeElement.classList.remove('node-visited');
-  //       node.distance = Infinity;
-  //       node.previousNode = null;
-  //     }
-  //   }
-  //   // Reset the start and finish node positions
-  //   START_NODE_ROW = 10;
-  //   START_NODE_COL = 15;
-  //   FINISH_NODE_ROW = 10;
-  //   FINISH_NODE_COL = 35;
-  //   this.restorePivotnodes(true, true);
-  //   this.setState({ isVisualized: false, grid });
-  // }
-
-  // clearBoard() {
-  //   // Check if the animation is running, if so, return without handling the event
-  //   if (this.state.isAlgoGenerating) return;
-  
-  //   const { grid } = this.state;
-  //   let startNodeFound = false;
-  //   let finishNodeFound = false;
-  
-  //   for (let row = 0; row < grid.length; row++) {
-  //     for (let col = 0; col < grid[0].length; col++) {
-  //       const node = grid[row][col];
-  //       node.isVisited = false;
-  
-  //       if (node.isStart) {
-  //         if (!startNodeFound) {
-  //           startNodeFound = true;
-  //         } else {
-  //           grid[row][col].isStart = false;
-  //         }
-  //       }
-  
-  //       if (node.isFinish) {
-  //         if (!finishNodeFound) {
-  //           finishNodeFound = true;
-  //         } else {
-  //           grid[row][col].isFinish = false;
-  //         }
-  //       }
-  
-  //       if (!node.isStart && !node.isFinish) {
-  //         const nodeElement = document.getElementById(`node-${node.row}-${node.col}`);
-  //         nodeElement.className = 'node';
-  //         nodeElement.classList.remove('node-visited');
-  //       }
-  
-  //       if (!node.isStart && !node.isFinish && node.isWall) {
-  //         document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
-  //         grid[row][col].isWall = false;
-  //       }
-  
-  //       grid[row][col].distance = Infinity;
-  //       grid[row][col].previousNode = null;
-  //     }
-  //   }
-  
-  //   // Reset the start and finish node positions
-  //   const START_NODE_ROW = 10;
-  //   const START_NODE_COL = 15;
-  //   const FINISH_NODE_ROW = 10;
-  //   const FINISH_NODE_COL = 35;
-  //   grid[START_NODE_ROW][START_NODE_COL].isStart = true;
-  //   grid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = true;
-  
-  //   this.setState({ isVisualized: false, grid });
-  // }
-  
 
   clearWalls(){
     // Check if the animation is running, if so, return without handling the event
@@ -460,12 +407,17 @@ export default class PathfindingVisualizer extends Component {
           <button class="dropbtn">{this.state.selectedAlgorithm}</button>
             <div class="dropdown-content">
               <button onClick={() => this.setState ({ selectedAlgorithm: "Dijkstra's Algorithm" })}>Dijkstra's Algorithm</button>
+              <button onClick={() => this.setState ({ selectedAlgorithm: "Depth First Search" })}>Depth First Search</button>
+              <button onClick={() => this.setState ({ selectedAlgorithm: "Breadth First Search" })}>Breadth First Search</button>
+              <button onClick={() => this.setState ({ selectedAlgorithm: "A Star Search" })}>A Star Search</button>
             </div>
         </li>
         <li className='PathfindingVisualizer__navbar-item-dropdown'>
             <button id="Generate Maze" class="dropbtn">Generate Maze</button>
             <div class="dropdown-content">
               <button onClick={() => this.generateHorizontalMaze()}>Generate Horizontal Maze</button>
+              <button onClick={() => this.generateVerticalMaze()}>Generate Vertical Maze</button>
+              <button onClick={() => this.generateRecursiveDivisionMaze()}>Generate Recursive Division Maze</button>
             </div>
         </li>
         <li>

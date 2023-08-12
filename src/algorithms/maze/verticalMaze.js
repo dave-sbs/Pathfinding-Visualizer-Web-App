@@ -1,21 +1,22 @@
 /**
  * Name: Dave Boku
  * Project: Pathfinding Visualizer Project
- * File: horizontalMaze.js
- * Date: June, 2023
+ * File: verticalMaze.js
+ * Date: July, 2023
  * 
  * Credit to: Rohith S for code
  */
 
+
 let walls;
-export function horizontalMaze(grid, startNode, finishNode) {
+export function verticalMaze(grid, startNode, finishNode) {
   if (!startNode || !finishNode || startNode === finishNode) {
     return false;
   }
   let vertical = range(grid[0].length);
   let horizontal = range(grid.length);
   walls = [];
-  getHorizontalWalls(vertical, horizontal, startNode, finishNode);
+  getVerticalWalls(vertical, horizontal, startNode, finishNode);
   return walls;
 }
 
@@ -27,34 +28,34 @@ function range(len) {
   return result;
 }
 
-function getHorizontalWalls(vertical, horizontal, startNode, finishNode) {
-  if (horizontal.length < 2) {
+function getVerticalWalls(vertical, horizontal, startNode, finishNode) {
+  if (vertical.length < 2) {
     return;
   }
 
   let choice = Math.floor(Math.random() * 2);
-  for (let num of horizontal) {
+  for (let num of vertical) {
     if (choice === 0 && num % 2 !== 0) {
-      addWall(num, vertical, startNode, finishNode);
+      addWall(num, horizontal, startNode, finishNode);
     }
     if (choice === 1 && num % 2 === 0) {
-      addWall(num, vertical, startNode, finishNode);
+      addWall(num, horizontal, startNode, finishNode);
     }
   }
 }
 
-function addWall(num, vertical, startNode, finishNode) {
+function addWall(num, horizontal, startNode, finishNode) {
   let isStartFinish = false;
   let tempWalls = [];
-  for (let temp of vertical) {
+  for (let temp of horizontal) {
     if (
-      (num === startNode.row && temp === startNode.col) ||
-      (num === finishNode.row && temp === finishNode.col)
+      (temp === startNode.row && num === startNode.col) ||
+      (temp === finishNode.row && num === finishNode.col)
     ) {
       isStartFinish = true;
       continue;
     }
-    tempWalls.push([num, temp]);
+    tempWalls.push([temp, num]);
   }
   if (!isStartFinish) {
     tempWalls.splice(Math.floor(Math.random() * tempWalls.length), 1);

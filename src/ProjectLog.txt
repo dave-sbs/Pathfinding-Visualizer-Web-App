@@ -2,11 +2,8 @@ ________________________________________________________________________________
 TASKS AHEAD
     MVP
 1. Rewrite the remaining algorithms
-2. ALSO I HAVE AN ERROR WHERE THE WALLS CAN BE DRAWN ON TOP OF THE START AND END NODES. CAUSES A LOT OF PROBLEMS SOLVE IT ASAP!!!
-13. Post on github
 14. Add metrics and analysis section
 9. I need to figure out a way to move the start and end nodes while the search algo updates in real time. Probably will have to do something with the datastructure storing the visited nodes
-4. Add the speed and maybe even grid size adjuster 
 7. Maybe think of using multiple start nodes that map to the same finish node - EXTENSION
 10. Clean up code using chatGPT. But before that create a Github repo and do version control to show that I actually did all the coding before final clean up
 
@@ -33,6 +30,9 @@ ________________________________________________________________________________
 2. Debug wall issue - I think it's solved. Would've been ideal if I could just adjust it once I have placed the start node and handleMouseUp() has been called but because of my re-animation thing, it might cause issues. 
 11. Add Icons on top of start and finish nodes - Kinda handled by just keeping the start and finish nodes unchanged
 15. Add speed adjuster
+2. ALSO I HAVE AN ERROR WHERE THE WALLS CAN BE DRAWN ON TOP OF THE START AND END NODES. CAUSES A LOT OF PROBLEMS SOLVE IT ASAP!!!
+13. Post on github
+4. Add the speed and maybe even grid size adjuster 
 
 _____________________________________________________________________________________________________________________________________________________________________________________________
     THOUGHTS

@@ -1,11 +1,11 @@
 /**
  * Name: Dave Boku
  * Project: Pathfinding Visualizer Project
- * File: depthFirstSearch.js
+ * File: breadthFirstSearch.js
  * Date: July, 2023
  */
 
-export function depthFirstSearch(grid, startNode, finishNode) {
+export function breadthFirstSearch(grid, startNode, finishNode) {
     if (!startNode || !finishNode || startNode === finishNode) {
         return false;
       }
@@ -21,7 +21,7 @@ export function depthFirstSearch(grid, startNode, finishNode) {
         let unvisitedNeighbors = getUnvisitedNeighbors(currentNode, grid);
         for (let neighbor of unvisitedNeighbors) {
             neighbor.previousNode = currentNode;
-            unvisitedNodes.unshift(neighbor);
+            unvisitedNodes.push(neighbor);
         }
         if (currentNode === finishNode) {
             break;
@@ -42,7 +42,7 @@ function getUnvisitedNeighbors(node, grid) {
 }
 
 
-export function getNodesInShortestPathOrderDFS (finishNode) {
+export function getNodesInShortestPathOrderBFS (finishNode) {
   let nodesInShortestPathOrder = [];
   let currentNode = finishNode;
   while (currentNode !== null) {

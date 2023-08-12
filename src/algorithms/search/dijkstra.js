@@ -1,31 +1,23 @@
-// Performs Dijkstra's algorithm; returns *all* nodes in the order
-// in which they were visited. Also makes nodes point back to their
-// previous node, effectively allowing us to compute the shortest path
-// by backtracking from the finish node.
+/**
+ * Name: Dave Boku
+ * Project: Pathfinding Visualizer Project
+ * File: dijkstra.js
+ * Date: June, 2023
+ */
+
 export function dijkstra(grid, startNode, finishNode) {
-    // Reset properties for all nodes in the grid
     resetNodes(grid);
-  
     const visitedNodesInOrder = [];
     startNode.distance = 0;
     const unvisitedNodes = getAllNodes(grid);
-  
     while (unvisitedNodes.size !== 0) {
       const closestNode = getClosestNode(unvisitedNodes);
       unvisitedNodes.delete(closestNode);
-  
-      // If we encounter a wall, we skip it.
       if (closestNode.isWall) continue;
-  
-      // If the closest node is at a distance of infinity,
-      // we must be trapped and should therefore stop.
       if (closestNode.distance === Infinity) return visitedNodesInOrder;
-  
       closestNode.isVisited = true;
       visitedNodesInOrder.push(closestNode);
-  
       if (closestNode === finishNode) return visitedNodesInOrder;
-  
       updateUnvisitedNeighbors(closestNode, grid, unvisitedNodes);
     }
   }
@@ -44,10 +36,10 @@ export function dijkstra(grid, startNode, finishNode) {
     let closestNode = null;
     let closestDistance = Infinity;
   
-    for (const node of unvisitedNodes.values()) {
-      if (node.distance < closestDistance) {
-        closestNode = node;
-        closestDistance = node.distance;
+    for (const neighborNode of unvisitedNodes.values()) {
+      if (neighborNode.distance < closestDistance) {
+        closestNode = neighborNode;
+        closestDistance = neighborNode.distance;
       }
     }
   
@@ -56,7 +48,6 @@ export function dijkstra(grid, startNode, finishNode) {
   
   function updateUnvisitedNeighbors(node, grid, unvisitedNodes) {
     const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
-  
     for (const neighbor of unvisitedNeighbors) {
       neighbor.distance = node.distance + 1;
       neighbor.previousNode = node;
@@ -86,7 +77,7 @@ export function dijkstra(grid, startNode, finishNode) {
     return nodes;
   }
   
-  export function getNodesInShortestPathOrder(startNode, finishNode) {
+  export function getNodesInShortestPathOrderDijkstra(startNode, finishNode) {
     const nodesInShortestPathOrder = [];
     let currentNode = finishNode;
   
@@ -99,3 +90,4 @@ export function dijkstra(grid, startNode, finishNode) {
     return nodesInShortestPathOrder;
   }
   
+
