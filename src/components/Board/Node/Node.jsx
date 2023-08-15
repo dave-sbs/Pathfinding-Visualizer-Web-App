@@ -22,26 +22,9 @@ export default class Node extends Component {
       onMouseEnter,
       onMouseOver,
       onMouseUp,
-      width,
-      height,
-      numRows,
-      numColumns,
     } = this.props;
 
     const identifier = isFinish ? 'node-finish' : isStart ? 'node-start' : isWall ? 'node-wall' : isVisited ? 'node-visited' : '';
-
-      let cellWidth = Math.floor((width - 15) / numColumns);
-  let cellHeight;
-  if (width > 1500) {
-    cellHeight = Math.floor((height - 70) / numRows);
-  } else if (width > 1000) {
-    cellHeight = Math.floor((height - 70) / numRows);
-  } else if (width > 500) {
-    cellHeight = Math.floor((height - 60) / numRows);
-  } else if (width > 0) {
-    cellHeight = Math.floor((height - 50) / numRows);
-  }
-
 
     return (
       <div
