@@ -11,15 +11,15 @@ import Navbar from '../Navbar/Navbar.jsx';
 import './PathfindingVisualizer.css';
 
 //Pathfinder Algorithms
-import { dijkstra, getNodesInShortestPathOrderDijkstra } from '../../../../src/algorithms/search/dijkstra';
-import { depthFirstSearch, getNodesInShortestPathOrderDFS } from '../../../../src/algorithms/search/depthFirstSearch';
-import { breadthFirstSearch, getNodesInShortestPathOrderBFS } from '../../../../src/algorithms/search/breadthFirstSearch';
-import { aStar, getNodesInShortestPathOrderAStar } from '../../../../src/algorithms/search/aStar';
+import { dijkstra, getNodesInShortestPathOrderDijkstra } from '../../algorithms/search/dijkstra';
+import { depthFirstSearch, getNodesInShortestPathOrderDFS } from '../../algorithms/search/depthFirstSearch';
+import { breadthFirstSearch, getNodesInShortestPathOrderBFS } from '../../algorithms/search/breadthFirstSearch';
+import { aStar, getNodesInShortestPathOrderAStar } from '../../algorithms/search/aStar';
 
 //Maze Algorithms
-import { horizontalMaze } from '../../../../src/algorithms/maze/horizontalMaze.js';
-import { verticalMaze } from '../../../../src/algorithms/maze/verticalMaze.js';
-import { recursiveDivisionMaze } from '../../../../src/algorithms/maze/recursiveDivisionMaze.js';
+import { horizontalMaze } from '../../algorithms/maze/horizontalMaze.js';
+import { verticalMaze } from '../../algorithms/maze/verticalMaze.js';
+import { recursiveDivisionMaze } from '../../algorithms/maze/recursiveDivisionMaze.js';
 
 let START_NODE_ROW = 10;
 let START_NODE_COL = 15;
