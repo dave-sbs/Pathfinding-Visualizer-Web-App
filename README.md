@@ -12,9 +12,15 @@ The Pathfinding Visualizer Web App is a tool built using React and JavaScript th
 - Maze placement to simulate real-world scenarios.
 - Different maze-generation algorithms.
 - Step-by-step visualization for better understanding.
-- Options to clear the path and clear the walls. 
+- Options to clear the path and clear the walls.
+
+## Demo
+
+https://github.com/dave-sbs/Pathfinding-Visualizer-Web-App/assets/117487090/14ca6e6b-f148-4505-9c0b-fe26aa71df9f
 
 ## Getting Started
+
+*DISCLAIMER: I am currently working on hosting the project on GitHub. I am currently trying to fix a very weird bug that is messing with my gh-build branch. Will host the project as soon as I fix the bug.
 
 To run the Pathfinding Visualizer Web App locally, follow these steps:
 
