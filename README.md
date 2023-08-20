@@ -16,7 +16,7 @@ The Pathfinding Visualizer Web App is a tool built using React and JavaScript th
 
 ## Demo
 
-https://github.com/dave-sbs/Pathfinding-Visualizer-Web-App/assets/117487090/14ca6e6b-f148-4505-9c0b-fe26aa71df9f
+https://github.com/dave-sbs/Pathfinding-Visualizer-Web-App/assets/117487090/10a7730a-b127-4303-bb80-e00002b525e4
 
 ## Getting Started
 
