@@ -20,7 +20,7 @@ https://github.com/dave-sbs/Pathfinding-Visualizer-Web-App/assets/117487090/10a7
 
 ## Getting Started
 
-*DISCLAIMER: I am currently working on hosting the project on GitHub Paages. I am currently trying to fix a very weird bug that is messing with my gh-build branch. Will host the project as soon as I fix the bug.
+*DISCLAIMER: I am currently working on hosting the project on GitHub Pages. I am currently trying to fix a very weird bug that is messing with my gh-build branch. Will host the project as soon as I fix the bug.
 
 To run the Pathfinding Visualizer Web App locally, follow these steps:
 
